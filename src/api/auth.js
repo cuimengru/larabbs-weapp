@@ -42,4 +42,11 @@ export function getVerificationCode(key, code) {
       captcha_code: code
     }
   })
+}
+
+export function register(data) {
+  return request('weapp/users', {
+    method: 'post',
+    data: data
+  })
 }      
