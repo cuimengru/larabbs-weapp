@@ -5,8 +5,7 @@ module.exports = {
   wpyExt: '.wpy',
   eslint: true,
   cliLogs: !prod,
-  static: ['./src/assets'],
-  // static: ['static'],
+  static: ['static'],
   build: {
   },
   resolve: {
