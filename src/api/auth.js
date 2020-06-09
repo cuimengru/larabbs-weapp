@@ -23,3 +23,13 @@ export function logout(token) {
       'Authorization': 'Bearer ' + token
     }
   })
+}
+
+export function getCaptcha(phone) {
+  return request('captchas', {
+    method: 'post',
+    data: {
+      phone: phone
+    }
+  })
+}    
