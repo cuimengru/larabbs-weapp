@@ -1,7 +1,11 @@
 import Vuex from '@wepy/x';
+import users from './modules/user'
 
 export default new Vuex.Store({
-  state: {
+   modules: {
+    users,
+  }
+  /*state: {
     counter: 0
   },
   mutations: {
@@ -24,5 +28,5 @@ export default new Vuex.Store({
         commit('increment');
       }, 1000);
     }
-  }
+  }*/
 });
