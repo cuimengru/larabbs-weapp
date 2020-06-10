@@ -50,3 +50,11 @@ export function register(data) {
     data: data
   })
 }      
+
+export function getPerms() {
+  return wx.getStorageSync('perms')
+}
+
+export function setPerms(perms) {
+  return wx.setStorageSync('perms', perms)
+}
