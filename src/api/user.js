@@ -22,3 +22,7 @@ export function updateAvatar(avatar) {
     filePath: avatar
   })
 }
+
+export function getUser(id) {
+  return request('users/'+id)
+}
