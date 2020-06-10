@@ -119,6 +119,7 @@
   import wepy from '@wepy/core'
   import { getTopics, getCategories } from '@/api/topic'
   import listRefresh from '@/mixins/list-refresh.js'
+  import eventHub from '@/common/eventHub'
 
   wepy.page({
     mixins: [ listRefresh ],
@@ -130,9 +131,13 @@
       // 分类列表是否展开
       categoryOpen: false,
     },
-    async onLoad() {
+    async onLoad(options) {
       this.loadCategories()
-      this.loadData()
+      eventHub.$on('topic-deleted', (topic) => {
+        this.page = 1
+        this.noMoreData = false
+        this.loadData(true)
+      })
     },
     computed: {
       currentCategoryId() {
