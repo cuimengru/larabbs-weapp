@@ -14,7 +14,7 @@
 </config>
 <script>
   import wepy from '@wepy/core'
-  import { getReplies } from '@/api/reply'
+  import { getUserReplies } from '@/api/reply'
   import listRefresh from '@/mixins/list-refresh.js'
 
   wepy.page({
@@ -30,7 +30,7 @@
     },
     methods: {
       fetchData() {
-        return  getReplies(this.topicId, {
+        return  getUserReplies(this.topicId, {
           page: this.page,
           include: 'user'
         })
