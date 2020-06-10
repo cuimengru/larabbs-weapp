@@ -1,3 +1,4 @@
+import { getCurrentUser, updateUser } from '@/api/user'
 import { login, logout, refresh } from '@/api/auth'
 import { getCurrentUser } from '@/api/user'
 import wepy from '@wepy/core'
@@ -42,6 +43,13 @@ const actions = {
 
     commit('setUser', userResponse.data)
     auth.setUser(userResponse.data)
+  },
+  async updateUser ({ commit }, params = {}) {
+
+    const editResponse = await updateUser(params)
+
+    commit('setUser', editResponse.data)
+    auth.setUser(editResponse.data)
   },
   async refresh ({ dispatch, commit, state }, params = {}) {
     const refreshResponse = await refresh(state.accessToken, {}, false)
