@@ -120,9 +120,17 @@
   import { getTopics, getCategories } from '@/api/topic'
   import listRefresh from '@/mixins/list-refresh.js'
   import eventHub from '@/common/eventHub'
+  import store from '@/store'
+  import { mapGetters } from '@wepy/x'
+  import syncBadge from '@/mixins/sync-badge'
 
   wepy.page({
+    store,
+    mixins:[syncBadge],
     mixins: [ listRefresh ],
+    computed: {
+      ...mapGetters([ 'unreadCount'])
+    },
     data: {
       // 分类数据
       categories: [],
@@ -134,7 +142,7 @@
     async onLoad(options) {
       this.loadCategories()
       this.loadData()
-      
+
       eventHub.$on('topic-deleted', (topic) => {
         this.page = 1
         this.noMoreData = false
