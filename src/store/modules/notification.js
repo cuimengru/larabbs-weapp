@@ -1,6 +1,7 @@
 import wepy from '@wepy/core'
 
-import { getNotificationStats } from '@/api/notification'
+import { getNotificationStats, readNotifications } from '@/api/notification'
+
 
 const state = {
   unreadCount: 0
@@ -30,6 +31,13 @@ const mutations = {
     state.unreadCount = count
   }
 }
+
+ async readNotifications ({ commit }, params = {}) {
+    const statsResponse = await readNotifications()
+
+    commit('setUnreadCount', 0)
+  }
+  
 
 export default {
   state,
