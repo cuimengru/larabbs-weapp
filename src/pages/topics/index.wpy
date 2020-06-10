@@ -103,8 +103,8 @@
         </div>
       </div>
     </div>
-    <topic-list :topics="topics" :no-more-data ="noMoreData"></topic-list>
   </div>
+   <topic-list :topics="topics" :no-more-data ="noMoreData"></topic-list>
 </div>
 </template>
 <config>
@@ -118,23 +118,21 @@
 <script>
   import wepy from '@wepy/core'
   import { getTopics, getCategories } from '@/api/topic'
+  import listRefresh from '@/mixins/list-refresh.js'
 
   wepy.page({
+    mixins: [ listRefresh ],
     data: {
       // 分类数据
       categories: [],
       // 当前的分类
       currentCategory: {},
-      // 是否显示分类
+      // 分类列表是否展开
       categoryOpen: false,
-      // 话题数据
-      topics: [],
-      // 当前分页
-      page: 1,
-      // 是否还有更多数据
-      noMoreData: false,
-      // 是否在加载中
-      isLoading: false
+    },
+    async onLoad() {
+      this.loadCategories()
+      this.loadData()
     },
     computed: {
       currentCategoryId() {
@@ -168,7 +166,31 @@
       this.isLoading = false
     },
     methods: {
-      // 获取话题数据
+      categorisToggle() {
+        this.categoryOpen = !this.categoryOpen
+      },
+      async fetchData() {
+        let params = {
+          page: this.page,
+          include: 'user,category'
+        }
+
+        if (this.currentCategoryId) {
+          params['filter[category_id]'] = this.currentCategoryId
+        }
+
+        // 请求话题列表接口
+        return getTopics(params)
+      },
+      async changeCategory (category = {}) {
+        this.currentCategory = category
+        this.categoryOpen = false
+        this.page = 1
+
+        // 调用组件的 reload 方法
+        this.loadData(true)
+      }
+      /*// 获取话题数据
       async loadTopics(reset = false) {
 
         let params = {
@@ -216,7 +238,7 @@
 
         // 调用组件的 reload 方法
         this.loadTopics(true)
-      }
+      }*/
     }
   })
 </script>
