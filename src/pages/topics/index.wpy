@@ -133,6 +133,8 @@
     },
     async onLoad(options) {
       this.loadCategories()
+      this.loadData()
+      
       eventHub.$on('topic-deleted', (topic) => {
         this.page = 1
         this.noMoreData = false
